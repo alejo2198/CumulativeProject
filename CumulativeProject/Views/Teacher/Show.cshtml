@@ -1,0 +1,18 @@
+﻿@using CumulativeProject.ViewModels
+@model CumulativeProject.ViewModels.TeacherClassesViewData
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>@Model.teacher.TeacherFullName</h2>
+<ul>
+    <li>Employee Number: @Model.teacher.TeacherEmployeeNumber</li>
+    <li>Hourly Wage: $@Model.teacher.TeacherHourlyWage</li>
+    <li>Hire Date: @Model.teacher.TeacherHireDate.ToString("MMMM dd, yyyy")</li>
+</ul>
+<h3>Courses</h3>
+@foreach(var singularClass in Model.classes)
+            {
+                <div><a href="/Class/Show/@singularClass.ClassId">@singularClass.ClassName</a></div>
+            }
+

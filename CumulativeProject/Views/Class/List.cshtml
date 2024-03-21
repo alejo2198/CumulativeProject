@@ -1,0 +1,11 @@
+﻿@model IEnumerable<CumulativeProject.Models.Class>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List of Classes</h2>
+
+@foreach (var singularClass in Model)
+{
+    <div><a href="Show/@singularClass.ClassId">@singularClass.ClassName</a></div>
+}

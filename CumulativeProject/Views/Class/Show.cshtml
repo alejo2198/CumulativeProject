@@ -1,0 +1,12 @@
+﻿@model CumulativeProject.Models.Class
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>@Model.ClassName</h2>
+<ul>
+    <li>Class code: @Model.ClassCode</li>
+    <li>Start Date: @Model.ClassStartDate.ToString("MMMM dd, yyyy")</li>
+    <li>Finish Date: @Model.ClassFinishDate.ToString("MMMM dd, yyyy")</li>
+
+</ul>
