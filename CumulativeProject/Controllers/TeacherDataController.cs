@@ -14,6 +14,12 @@ namespace CumulativeProject.Controllers
     {
         private SchoolDbContext School = new SchoolDbContext();
 
+
+        /// <summary>
+        /// This method is responsible for retreiving all teacher data from the database and converting them into a list of Teacher instances
+        /// </summary>
+        /// <returns>IEnumerabl<Teacher></returns>
+        /// <example>>GET api/TeacherData/ListTeachers -> {Teacher Object, Teacher Object, Teacher Object...}</example>
         [HttpGet]
         [Route("api/TeacherData/ListTeachers")]     
         public IEnumerable<Teacher> ListTeachers()
@@ -54,6 +60,12 @@ namespace CumulativeProject.Controllers
             return Teachers;
         }
 
+        /// <summary>
+        /// This method returns a singular teacher data from a database and converts it into a Teacher instance
+        /// </summary>
+        /// <param name="id">teacher id</param>
+        /// <returns>Teacher instance</returns>
+        /// <example>>GET api/TeacherData/ListTeachers -> {Teacher Object}</example>
         [HttpGet]
         [Route("api/TeacherData/FindTeacher/{id}")]
         public Teacher FindTeacher(int id)

@@ -9,21 +9,31 @@ using MySql.Data.MySqlClient;
 
 namespace CumulativeProject.Controllers
 {
+    
     public class ClassDataController : ApiController
     {
+        //create a db context
         private SchoolDbContext School = new SchoolDbContext();
-
+        /// <summary>
+        /// This method accesses a database and queries the database to get all classes
+        /// </summary>
+        /// <returns>a list of class Objects</returns>
+        /// <example>GET api/ClassData/ListClasses -> {Class Object, Class Object, Class Object...}</example>
         [HttpGet]
         [Route("api/ClassData/ListClasses")]
         public IEnumerable<Class> ListClasses()
         {
+            //opens the database connection
             MySqlConnection Conn = School.AccessDatabase();
             Conn.Open();
+            //creates the command to get all classes
             MySqlCommand cmd = Conn.CreateCommand();
             cmd.CommandText = "SELECT * FROM classes";
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             List<Class> Classes = new List<Class> { };
+
+            //loops through every class to create a class instance with the Resuklt set
             while (ResultSet.Read())
             {
                 int ClassId = Convert.ToInt32(ResultSet["classid"]);
@@ -54,6 +64,12 @@ namespace CumulativeProject.Controllers
             return Classes;
         }
 
+        /// <summary>
+        /// This method will take a class id and return a class object
+        /// </summary>
+        /// <param name="id">classid neccessary to retreive singular class</param>
+        /// <returns>{Class object}</returns>
+        /// <example>GET api/CLassData/FindClass -> {Class Object}</example>
         [HttpGet]
         [Route("api/ClassData/FindClass/{id}")]
         public Class FindClass(int id)
@@ -86,7 +102,11 @@ namespace CumulativeProject.Controllers
             return NewClass;
         }
 
-
+        /// <summary>
+        /// This method will return the classes taught by a specific teacher
+        /// </summary>
+        /// <param name="id">teacherid necessary to query the classes by teacher id</param>
+        /// <returns>{Class Object,Class Object, ...}</returns>
         [HttpGet]
         [Route("api/ClassData/ListClassesByTeacher/{id}")]
         public IEnumerable<Class> ListClassesByTeacher(int id)

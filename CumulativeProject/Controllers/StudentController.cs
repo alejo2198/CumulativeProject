@@ -16,6 +16,10 @@ namespace CumulativeProject.Controllers
         }
 
         // GET: Student/List
+        /// <summary>
+        /// This method directs to a page that displays all the students
+        /// </summary>
+        /// <returns>All students</returns>
         public ActionResult List()
         {
             StudentDataController controller = new StudentDataController();
@@ -24,6 +28,11 @@ namespace CumulativeProject.Controllers
         }
 
         // GET: Student/Show/{id}
+        /// <summary>
+        /// This method will show a view of an individual student,given the student id.
+        /// </summary>
+        /// <param name="id">student id</param>
+        /// <returns>a singular student</returns>
         public ActionResult Show(int id)
         {
             StudentDataController controller = new StudentDataController();
