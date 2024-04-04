@@ -69,7 +69,14 @@ namespace CumulativeProject.Controllers
         /// </summary>
         /// <param name="id">classid neccessary to retreive singular class</param>
         /// <returns>{Class object}</returns>
-        /// <example>GET api/CLassData/FindClass -> {Class Object}</example>
+        /// <example>GET api/CLassData/FindClass -> {
+        ///     public int ClassId;
+        ///     public string ClassCode;
+        ///     public string ClassName;
+        ///     public DateTime ClassStartDate;
+        ///     public DateTime ClassFinishDate;
+        ///     public int TeacherId;
+        ///}</example>
         [HttpGet]
         [Route("api/ClassData/FindClass/{id}")]
         public Class FindClass(int id)

@@ -21,7 +21,7 @@ namespace CumulativeProject.Controllers
         /// <returns>IEnumerabl<Teacher></returns>
         /// <example>>GET api/TeacherData/ListTeachers -> {Teacher Object, Teacher Object, Teacher Object...}</example>
         [HttpGet]
-        [Route("api/TeacherData/ListTeachers")]     
+        [Route("api/TeacherData/ListTeachers")]
         public IEnumerable<Teacher> ListTeachers()
         {
             MySqlConnection Conn = School.AccessDatabase();
@@ -30,19 +30,21 @@ namespace CumulativeProject.Controllers
             cmd.CommandText = "SELECT * FROM teachers";
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
-            List<Teacher> Teachers = new List<Teacher>{};
+            List<Teacher> Teachers = new List<Teacher> { };
             while (ResultSet.Read())
             {
                 int teacherId = Convert.ToInt32(ResultSet["teacherid"]);
-                string teacherFullName = ResultSet["teacherfname"].ToString() + " " + ResultSet["teacherlname"].ToString();
+                string teacherFirstName = ResultSet["teacherfname"].ToString();
+                string teacherLastName = ResultSet["teacherlname"].ToString();
                 string teacherEmployeeNumber = ResultSet["employeenumber"].ToString();
                 DateTime teacherHireDate = (DateTime)ResultSet["hiredate"];
-                decimal teacherHourly = Convert.ToDecimal(ResultSet["salary"]);     
-                  
+                decimal teacherHourly = Convert.ToDecimal(ResultSet["salary"]);
+
 
                 Teacher NewTeacher = new Teacher();
                 NewTeacher.TeacherId = teacherId;
-                NewTeacher.TeacherFullName = teacherFullName;
+                NewTeacher.TeacherFirstName = teacherFirstName;
+                NewTeacher.TeacherLastName = teacherLastName;
                 NewTeacher.TeacherEmployeeNumber = teacherEmployeeNumber;
                 NewTeacher.TeacherHireDate = teacherHireDate;
                 NewTeacher.TeacherHourlyWage = teacherHourly;
@@ -50,11 +52,11 @@ namespace CumulativeProject.Controllers
                 //Add the Teacher Name to the List
                 Teachers.Add(NewTeacher);
             }
-           
-                //Close the connection between the MySQL Database and the WebServer
-                Conn.Close();
 
-            
+            //Close the connection between the MySQL Database and the WebServer
+            Conn.Close();
+
+
 
             //Return the final list of teacher names
             return Teachers;
@@ -65,7 +67,17 @@ namespace CumulativeProject.Controllers
         /// </summary>
         /// <param name="id">teacher id</param>
         /// <returns>Teacher instance</returns>
-        /// <example>>GET api/TeacherData/ListTeachers -> {Teacher Object}</example>
+        /// <example>>GET api/TeacherData/ListTeachers ->
+        ///  {
+        ///     public int TeacherId;
+        ///     public string TeacherFirstName;
+        ///     public string TeacherLastName;
+        ///     public string TeacherEmployeeNumber;
+        ///     public DateTime TeacherHireDate;
+        ///     public decimal TeacherHourlyWage;
+        ///  }
+        ///</example>
+        ///
         [HttpGet]
         [Route("api/TeacherData/FindTeacher/{id}")]
         public Teacher FindTeacher(int id)
@@ -81,13 +93,15 @@ namespace CumulativeProject.Controllers
             while (ResultSet.Read())
             {
                 int teacherId = Convert.ToInt32(ResultSet["teacherid"]);
-                string teacherFullName = ResultSet["teacherfname"].ToString() + " " + ResultSet["teacherlname"].ToString();
+                string teacherFirstName = ResultSet["teacherfname"].ToString();
+                string teacherLastName = ResultSet["teacherlname"].ToString();
                 string teacherEmployeeNumber = ResultSet["employeenumber"].ToString();
                 DateTime teacherHireDate = (DateTime)ResultSet["hiredate"];
                 decimal teacherHourly = Convert.ToDecimal(ResultSet["salary"]);
 
                 NewTeacher.TeacherId = teacherId;
-                NewTeacher.TeacherFullName = teacherFullName;
+                NewTeacher.TeacherFirstName = teacherFirstName;
+                NewTeacher.TeacherLastName = teacherLastName;
                 NewTeacher.TeacherEmployeeNumber = teacherEmployeeNumber;
                 NewTeacher.TeacherHireDate = teacherHireDate;
                 NewTeacher.TeacherHourlyWage = teacherHourly;
@@ -95,5 +109,53 @@ namespace CumulativeProject.Controllers
 
             return NewTeacher;
         }
+        [HttpPost]
+        public void AddTeacher(Teacher NewTeacher)
+        {
+            //Create a database connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //open connection between web server and databse
+            Conn.Open();
+
+            //Establish a new comand
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = "insert into teachers (teacherfname,teacherlname,employeenumber,hiredate,salary) " +
+                "values (@TeacherFname,@TeacherLname,@TeacherEmployeeNumber,@TeacherHireDate,@TeacherHourlyWage)";
+            cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFirstName);
+            cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLastName);
+            cmd.Parameters.AddWithValue("@TeacherEmployeeNumber", NewTeacher.TeacherEmployeeNumber);
+            cmd.Parameters.AddWithValue("@TeacherHireDate", NewTeacher.TeacherHireDate);
+            cmd.Parameters.AddWithValue("@TeacherHourlyWage", NewTeacher.TeacherHourlyWage);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+            Conn.Close();
+        }
+
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            //Create a database connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //open connection between web server and databse
+            Conn.Open();
+
+            //Establish a new comand
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = "delete from teachers where teacherid = @id";
+            cmd.Parameters.AddWithValue("@id", id);
+          
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+            Conn.Close();
+        }
+
+
+
+
     }
 }

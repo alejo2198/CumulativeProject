@@ -19,7 +19,7 @@ namespace CumulativeProject.Controllers
         /// <summary>
         /// This method directs the page to a view that displays all classes
         /// </summary>
-        /// <returns>all classes</returns>
+        /// <returns>List of Classes</returns>
         public ActionResult List()
         {
             ClassDataController controller = new ClassDataController();

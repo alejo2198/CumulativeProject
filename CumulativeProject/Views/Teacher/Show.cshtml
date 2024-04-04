@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "Show";
 }
-
-<h2>@Model.teacher.TeacherFullName</h2>
+<a href="/Teacher/DeleteConfirm/@Model.teacher.TeacherId"class="navbar-link">Delete</a>
+<h2>@Model.teacher.TeacherFirstName @Model.teacher.TeacherLastName</h2>
 <ul>
     <li>Employee Number: @Model.teacher.TeacherEmployeeNumber</li>
     <li>Hourly Wage: $@Model.teacher.TeacherHourlyWage</li>

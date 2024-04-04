@@ -8,7 +8,8 @@ namespace CumulativeProject.Models
     public class Teacher
     {
         public int TeacherId;
-        public string TeacherFullName;
+        public string TeacherFirstName;
+        public string TeacherLastName;
         public string TeacherEmployeeNumber;
         public DateTime TeacherHireDate;
         public decimal TeacherHourlyWage;

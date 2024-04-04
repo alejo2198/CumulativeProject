@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<script>
+    window.onload = () => {
+        var teacherForm = document.forms.new_teacher;
+        teacherForm.onsubmit = () => {
+            var firstNameInput = teacherForm.TeacherFname;
+            var lastNameInput = teacherForm.TeacherLname;
+            var employeeNumberInput = teacherForm.TeacherEmployeeNumber;
+            var hireDateInput = teacherForm.TeacherHireDate;
+            var hourlyWageInput = teacherForm.TeacherHourlyWage;
+
+            if (firstNameInput.value === "") {
+                firstNameInput.style.backgroundColor = "red";
+                firstNameInput.focus();
+                return false
+
+            } else if (lastNameInput.value === "") {
+                lastNameInput.style.backgroundColor = "red";
+                lastNameInput.focus();
+                return false
+            } else if (employeeNumberInput.value === "") {
+                employeeNumberInput.style.backgroundColor = "red";
+                employeeNumberInput.focus();
+                return false
+            } else if (hireDateInput.value === "") {
+                hireDateInput.style.backgroundColor = "red";
+                hireDateInput.focus();
+                return false
+            } else if (hourlyWageInput.value === "" || hourlyWageInput.value === 0) {
+                hourlyWageInput.style.backgroundColor = "red";
+                hourlyWageInput.focus();
+                return false
+            }
+        }
+    }
+</script>
+
+<h2>New Teacher</h2>
+
+<form name="new_teacher" action="/Teacher/Create" method="post">
+    <div>
+        <label for="TeacherFname">First Name:</label>
+        <input type="text" name="TeacherFname" id="TeacherFname" />
+    </div>
+    <div>
+        <label for="TeacherLname">Last Name:</label>
+        <input type="text" name="TeacherLname" id="TeacherLname" />
+    </div>
+    <div>
+        <label for="TeacherEmployeeNumber">Employee Number:</label>
+        <input type="text" name="TeacherEmployeeNumber" id="TeacherEmployeeNumber" />
+    </div>
+    <div>
+        <label for="TeacherHireDate">Hire Date:</label>
+        <input type="datetime" name="TeacherHireDate" id="TeacherHireDate" />
+    </div>
+    <div>
+        <label for="TeacherHourlyWage">Hourly Wage</label>
+        <input type="number" step="0.1" name="TeacherHourlyWage" id="TeacherHourlyWage" />
+    </div>
+    <input type="submit" value="Create Teacher" />
+</form>

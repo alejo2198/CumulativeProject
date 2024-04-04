@@ -8,7 +8,8 @@ namespace CumulativeProject.Models
 	public class Student
 	{
         public int StudentId;
-        public string StudentFullName;
+        public string StudentFirstName;
+        public string StudentLastName;
         public string StudentNumber;
         public DateTime StudentEnrolDate;
     }

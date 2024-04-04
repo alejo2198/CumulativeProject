@@ -34,13 +34,15 @@ namespace CumulativeProject.Controllers
             while (ResultSet.Read())
             {
                 int StudentId = Convert.ToInt32(ResultSet["studentid"]);
-                string StudentFullName = ResultSet["studentfname"].ToString() + " " + ResultSet["studentlname"].ToString();
+                string StudentFirstName = ResultSet["studentfname"].ToString();
+                string StudentLastName = ResultSet["studentlname"].ToString();
                 string StudentNumber = ResultSet["studentnumber"].ToString();
                 DateTime StudentEnrolDate = (DateTime)ResultSet["enroldate"];
                 
                 Student NewStudent = new Student();
                 NewStudent.StudentId = StudentId;
-                NewStudent.StudentFullName = StudentFullName;
+                NewStudent.StudentFirstName = StudentFirstName;
+                NewStudent.StudentLastName = StudentLastName;
                 NewStudent.StudentNumber = StudentNumber;
                 NewStudent.StudentEnrolDate = StudentEnrolDate;
 
@@ -61,7 +63,13 @@ namespace CumulativeProject.Controllers
         /// </summary>
         /// <param name="id">student id</param>
         /// <returns>Student instance</returns>
-        /// <example>>GET api/StudentData/ListStudents -> {Student Object}</example>
+        /// <example>>GET api/StudentData/ListStudents -> 
+        ///     public int StudentId;
+        ///     public string StudentFirstName;
+        ///     public string StudentLastName;
+        ///     public string StudentNumber;
+        ///     public DateTime StudentEnrolDate;
+        /// </example>
 
         [HttpGet]
         [Route("api/StudentData/FindStudent/{id}")]
@@ -78,12 +86,14 @@ namespace CumulativeProject.Controllers
             while (ResultSet.Read())
             {
                 int StudentId = Convert.ToInt32(ResultSet["studentid"]);
-                string StudentFullName = ResultSet["studentfname"].ToString() + " " + ResultSet["studentlname"].ToString();
+                string StudentFirstName = ResultSet["studentfname"].ToString();
+                string StudentLastName = ResultSet["studentlname"].ToString();
                 string StudentNumber = ResultSet["studentnumber"].ToString();
                 DateTime StudentEnrolDate = (DateTime)ResultSet["enroldate"];
 
                 NewStudent.StudentId = StudentId;
-                NewStudent.StudentFullName = StudentFullName;
+                NewStudent.StudentFirstName = StudentFirstName;
+                NewStudent.StudentLastName = StudentLastName;
                 NewStudent.StudentNumber = StudentNumber;
                 NewStudent.StudentEnrolDate = StudentEnrolDate;
             }
