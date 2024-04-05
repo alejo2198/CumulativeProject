@@ -80,7 +80,8 @@ namespace CumulativeProject.Controllers
             MySqlConnection Conn = School.AccessDatabase();
             Conn.Open();
             MySqlCommand cmd = Conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM students WHERE studentid = " + id.ToString() + ";";
+            cmd.CommandText = "SELECT * FROM students WHERE studentid =  @id";
+            cmd.Parameters.AddWithValue("@id", id.ToString());
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             while (ResultSet.Read())
