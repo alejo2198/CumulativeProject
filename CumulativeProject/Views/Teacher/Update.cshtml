@@ -1,0 +1,87 @@
+﻿@model CumulativeProject.Models.Teacher 
+@{
+    ViewBag.Title = "Update";
+}
+@{ 
+    var day = Model.TeacherHireDate.Day;
+    var  stringDay = day.ToString();
+    if(day < 10)
+    {
+        stringDay = "0" + day.ToString();
+    }
+
+    var month = Model.TeacherHireDate.Month;
+    var stringMonth = month.ToString();
+    if (month < 10)
+    {
+        stringMonth = "0" + month.ToString();
+    }
+    //This date format is accepted as a value in the date input
+    var FormattedDate = Model.TeacherHireDate.Year.ToString() + "-"+stringMonth + "-"+stringDay;
+
+}
+
+
+<script>
+    window.onload = () => {
+        var teacherForm = document.forms.new_teacher;
+        teacherForm.onsubmit = () => {
+            var firstNameInput = teacherForm.TeacherFname;
+            var lastNameInput = teacherForm.TeacherLname;
+            var employeeNumberInput = teacherForm.TeacherEmployeeNumber;
+            var hireDateInput = teacherForm.TeacherHireDate;
+            var hourlyWageInput = teacherForm.TeacherHourlyWage;
+
+            if (firstNameInput.value === "") {
+                firstNameInput.style.backgroundColor = "red";
+                firstNameInput.focus();
+                return false
+
+            } else if (lastNameInput.value === "") {
+                lastNameInput.style.backgroundColor = "red";
+                lastNameInput.focus();
+                return false
+            } else if (employeeNumberInput.value === "") {
+                employeeNumberInput.style.backgroundColor = "red";
+                employeeNumberInput.focus();
+                return false
+            } else if (hireDateInput.value === "") {
+                hireDateInput.style.backgroundColor = "red";
+                hireDateInput.focus();
+                return false
+            } else if (hourlyWageInput.value === "" || hourlyWageInput.value === 0) {
+                hourlyWageInput.style.backgroundColor = "red";
+                hourlyWageInput.focus();
+                return false
+            }
+        }
+    }
+</script>
+<nav>
+    <a href="/Teacher/Show/@Model.TeacherId">Back</a>
+</nav>
+<h2>Update Teacher</h2>
+
+<form name="new_teacher" action="/Teacher/Update/@Model.TeacherId" method="post">
+    <div>
+        <label for="TeacherFname">First Name:</label>
+        <input type="text" name="TeacherFname" id="TeacherFname" value="@Model.TeacherFirstName" />
+    </div>
+    <div>
+        <label for="TeacherLname">Last Name:</label>
+        <input type="text" name="TeacherLname" id="TeacherLname"  value="@Model.TeacherLastName" />
+    </div>
+    <div>
+        <label for="TeacherEmployeeNumber">Employee Number:</label>
+        <input type="text" name="TeacherEmployeeNumber" id="TeacherEmployeeNumber"  value="@Model.TeacherEmployeeNumber"/>
+    </div>
+    <div>
+        <label for="TeacherHireDate">Hire Date:</label>
+        <input type="date" name="TeacherHireDate" id="TeacherHireDate"  value="@FormattedDate" />
+    </div>
+    <div>
+        <label for="TeacherHourlyWage">Hourly Wage</label>
+        <input type="number" step="0.01" name="TeacherHourlyWage" id="TeacherHourlyWage"  value="@Model.TeacherHourlyWage"/>
+    </div>
+    <input type="submit" value="Update Teacher" />
+</form>

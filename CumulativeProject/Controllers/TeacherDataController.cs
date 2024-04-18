@@ -155,6 +155,31 @@ namespace CumulativeProject.Controllers
             Conn.Close();
         }
 
+        public void UpdateTeacher(int id,[FromBody] Teacher TeacherInfo)
+        {
+            //Create a database connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //open connection between web server and databse
+            Conn.Open();
+
+            //Establish a new comand
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = "update  teachers set  teacherfname=@TeacherFname,teacherlname=@TeacherLname,employeenumber=@TeacherEmployeeNumber," +
+                "hiredate=@TeacherHireDate,salary=@TeacherHourlyWage where teacherid=@TeacherId";
+            cmd.Parameters.AddWithValue("@TeacherFname", TeacherInfo.TeacherFirstName);
+            cmd.Parameters.AddWithValue("@TeacherLname", TeacherInfo.TeacherLastName);
+            cmd.Parameters.AddWithValue("@TeacherEmployeeNumber", TeacherInfo.TeacherEmployeeNumber);
+            cmd.Parameters.AddWithValue("@TeacherHireDate", TeacherInfo.TeacherHireDate);
+            cmd.Parameters.AddWithValue("@TeacherHourlyWage", TeacherInfo.TeacherHourlyWage);
+            cmd.Parameters.AddWithValue("@TeacherId", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+            Conn.Close();
+
+        }
 
 
 
